@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*") // Allow all origins
+@CrossOrigin(origins = "*") //allowing all origins (0_0)
 public class UserController {
 
     @Autowired

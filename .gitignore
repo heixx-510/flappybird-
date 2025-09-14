@@ -36,6 +36,7 @@ bin/
 *.war
 *.nar
 *.ear
+*.idea
 *.zip
 *.tar.gz
 *.rar
@@ -44,3 +45,4 @@ hs_err_pid*
 *.iml
 out/
 Thumbs.db
+backend/src/main/resources/application.properties

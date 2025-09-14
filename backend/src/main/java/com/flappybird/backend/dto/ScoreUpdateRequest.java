@@ -4,7 +4,7 @@ public class ScoreUpdateRequest {
     private String username;
     private int score;
 
-    // Constructors
+
     public ScoreUpdateRequest() {}
 
     public ScoreUpdateRequest(String username, int score) {

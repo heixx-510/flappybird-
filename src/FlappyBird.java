@@ -83,7 +83,6 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     private java.util.List<String[]> leaderboardData;
 
     public FlappyBird() {
-        // Show login screen first
         showLoginScreen();
     }
 
@@ -139,7 +138,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
                 currentPassword = password;
                 messageLabel.setText("Login successful! Starting game...");
 
-                // Initialize game after a short delay
+                //adding a small delay before stating the game
                 Timer timer = new Timer(1000, e -> {
                     loginFrame.dispose();
                     initializeGame();
@@ -199,7 +198,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         setFocusable(true);
         addKeyListener(this);
 
-        // Load images or create placeholders
+
         try {
             backgroundImg = new ImageIcon(getClass().getResource("/bg-4.jpg")).getImage();
             birdImg = new ImageIcon(getClass().getResource("/bird-2.png")).getImage();
@@ -207,7 +206,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
             bottomPipeImg = new ImageIcon(getClass().getResource("/pipe-down.png")).getImage();
         } catch (Exception e) {
             System.out.println("Error loading images: " + e.getMessage());
-            // Create placeholder images if files not found
+            // if image files not found
             backgroundImg = createColorImage(boardWidth, boardHeight, Color.CYAN);
             birdImg = createColorImage(birdWidth, birdHeight, Color.RED);
             topPipeImg = createColorImage(pipeWidth, pipeHeight, Color.GREEN);
@@ -243,7 +242,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
         frame.setVisible(true);
         requestFocus();
     }
-
+    //next part was really challenging for me :')//
     private void sendScoreUpdate(String username, int score) {
         new Thread(() -> {
             try {
@@ -301,17 +300,17 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
                             response.append(responseLine);
                         }
 
-                        // Simple JSON parsing without external libraries
+                        //parsing jason
                         leaderboardData = parseJsonResponse(response.toString());
 
                         showLeaderboard = true;
                         repaint();
 
-                        // Hide leaderboard after 5 seconds
+
                         Timer leaderboardTimer = new Timer(5000, e -> {
                             showLeaderboard = false;
                             repaint();
-                        });
+                        });//leaderboard visible only for 5 secs
                         leaderboardTimer.setRepeats(false);
                         leaderboardTimer.start();
                     }
@@ -342,7 +341,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     private java.util.List<String[]> parseJsonResponse(String json) {
         java.util.List<String[]> result = new ArrayList<>();
 
-        // Remove brackets and split into objects
+        // removing brackets and splitting into objects(this was annoying ngl)
         String cleanJson = json.replaceAll("[\\[\\]]", "");
         if (cleanJson.isEmpty()) {
             return result;
@@ -419,7 +418,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
             g.drawString(String.valueOf(score), 10, 35);
         }
 
-        // Show username
+        // Showing username
         g.setFont(new Font("Arial", Font.PLAIN, 14));
         g.drawString("User: " + currentUsername, 10, boardHeight - 20);
         g.drawString("Press L for Leaderboard", 10, boardHeight - 40);
@@ -509,7 +508,7 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
                 resetGame();
             }
         } else if (e.getKeyCode() == KeyEvent.VK_L) {
-            // Show leaderboard when L key is pressed
+
             fetchLeaderboard();
         }
     }
@@ -533,10 +532,10 @@ public class FlappyBird extends JPanel implements ActionListener, KeyListener {
     public void gameOver() {
         if (score > highscore) {
             highscore = score;
-            // Send score update to server
-            sendScoreUpdate(currentUsername, highscore);
+
+            sendScoreUpdate(currentUsername, highscore);//this will send score to server
         }
-        score = 0; // reset for new game
+        score = 0; // for the next game
     }
 
     public static void main(String[] args) {
